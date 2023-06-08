@@ -15,7 +15,7 @@ public class SponsorController {
     public Sponsors addSponsors(@RequestBody Sponsors sponsors){
         return sponsorService.addSponsors(sponsors);
     }
-    @GetMapping("/sponsors")
+    @GetMapping("/Getsponsors")
     public List<Sponsors> GetSponsorsList(){
         return sponsorService.GetSponsorsList();
     }
