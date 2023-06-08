@@ -8,7 +8,7 @@ public interface SponsorService {
     Sponsors addSponsors(Sponsors sponsors);
     List<Sponsors> GetSponsorsList();
 
-    Sponsors updateSponsors(Sponsors sponsors,Integer id);
+    Sponsors updateSponsors(Sponsors sponsors, Integer id);
 
     void deleteSponsors(Integer id);
 }
