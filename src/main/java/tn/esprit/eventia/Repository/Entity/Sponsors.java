@@ -9,13 +9,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import java.io.Serializable;
 
 @Entity(name = "sponsors")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Sponsors {
+public class Sponsors implements Serializable {
     @javax.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
