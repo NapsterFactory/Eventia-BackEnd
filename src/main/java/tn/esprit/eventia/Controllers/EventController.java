@@ -16,13 +16,17 @@ public class EventController {
     public Event addEvent(@RequestBody Event event){
         return eventService.addEvent(event);
     }
+    @PutMapping("/events/{id}")
+    public Event editEvent(@RequestBody Event event,@PathVariable("id") Long eventId){
+        return eventService.updateEvent(event,eventId);
+    }
 
     @GetMapping("/events")
     public List<Event> getEventList(){
         return eventService.GetEventList();
     }
 
-    @PutMapping("/events/{id}")
+    @DeleteMapping("/events/{id}")
     public String deleteEventById(@PathVariable("id") Long eventId){
         eventService.deleteEvent(eventId);
         return "Success";
