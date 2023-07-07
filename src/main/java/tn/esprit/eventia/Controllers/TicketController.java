@@ -1,59 +1,64 @@
 package tn.esprit.eventia.Controllers;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.eventia.Repository.Entity.PurchaseTicket;
 import tn.esprit.eventia.Services.Interfaces.IPurchaseTicket;
 import java.util.List;
+@CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
+@NoArgsConstructor
 @RequestMapping("/Tickets")
 public class TicketController {
+    @Autowired
     private IPurchaseTicket iPurchaseTicket;
+    @GetMapping("/test")
+    public String testm(){
+        System.out.println("hmdlh");
+        return "works";
+    }
 
-    @GetMapping("/afficherTicketById/{idpurchaseticket}")
-    public PurchaseTicket afficherTicketById(@PathVariable("idpurchaseticket") int Idpurchaseticket) {
+//    @GetMapping("/test1")
+//    public String test1(){
+//       // return iPurchaseTicket.test1();
+//    }
 
+    @GetMapping("/afficherTicketById/{id_purchase_ticket}")
+    public PurchaseTicket afficherTicketById(@PathVariable("id_purchase_ticket") int Idpurchaseticket) {
+        System.out.println("rappel envoyé");
         return iPurchaseTicket.selectById(Idpurchaseticket);
     }
 
     @GetMapping("/afficherAllTickets")
     public List<PurchaseTicket> afficherAll() {
-        System.out.println("rappel envoyé");
+        System.out.println("all tickets ");
         return iPurchaseTicket.selectAll();
     }
 
     @PostMapping("/ajouterTickets")
-    public ResponseEntity<String> addTicket (@RequestBody PurchaseTicket purchaseTicket) {
+    public ResponseEntity<PurchaseTicket> addTicket (@RequestBody PurchaseTicket p) {
+        System.out.println("rappel envoyéControl");
+        iPurchaseTicket.add(p);
 
-        iPurchaseTicket.add(purchaseTicket);
-
-        return ResponseEntity.ok("Added successfully.");
-    }
-    @PutMapping("/ModifierTickets")
-    public ResponseEntity<String> editTicket(@RequestBody PurchaseTicket ticket) {
-        iPurchaseTicket.edit(ticket);
-        System.out.println("MODIFIED");
-        return ResponseEntity.ok("Edited successfully.");
+        return ResponseEntity.ok(p);
     }
 
-    @DeleteMapping("SupprimerTicket")
-    public ResponseEntity<String> delete(@RequestBody PurchaseTicket ticket) {
-        iPurchaseTicket.delete(ticket);
-        return ResponseEntity.ok("Deleted successfully.");
-    }
-
-    @DeleteMapping("/SupprimerTicketById")
-    public ResponseEntity<String> supprimerTicketById(@RequestParam int idpurchaseticket) {
+    @DeleteMapping("/SupprimerTicketById/{id_purchase_ticket}")
+    public ResponseEntity<String> supprimerTicketById(@PathVariable("id_purchase_ticket") int idpurchaseticket) {
         iPurchaseTicket.deleteById(idpurchaseticket);
         return ResponseEntity.ok("Deleted successfully.");
     }
 
-    @DeleteMapping("/SupprimerAllTickets")
-    public ResponseEntity<String> supprimerAllTickets() {
-        iPurchaseTicket.deleteAll();
-        return ResponseEntity.ok("Deleted successfully.");
+
+    @PutMapping("/edit")
+    public ResponseEntity<String> editTickets(@RequestBody PurchaseTicket purchaseTicket) {
+        iPurchaseTicket.edit(purchaseTicket);
+        return ResponseEntity.ok("Update successfully.");
     }
 
 }
